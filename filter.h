@@ -1,6 +1,10 @@
 #ifndef FILTER_H
 #define FILTER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <unistd.h>
 #include <sys/types.h>
 
@@ -74,5 +78,8 @@ ssize_t filter(char ** const dest, size_t const osize,
         void const * const src, size_t const isize,
         size_t const argc, char * const argv[]);
 
-#endif /* end of include guard */
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
+#endif /* end of include guard */
