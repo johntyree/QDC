@@ -60,6 +60,9 @@ char* get_backtrace(char *full, size_t size) {
     }
 
     free(strings);
+    char buf[size];
+    demangle(buf, full, size);
+    memcpy(full, buf, size);
     return full;
 }
 
