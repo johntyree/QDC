@@ -25,7 +25,7 @@ char* demangle2(char *bt) {
 }
 
 
-size_t demangle(char *dest, size_t n, char *bt) {
+size_t demangle(char *dest, char *bt, size_t n) {
     assert(dest);
     assert(bt);
     char *output = demangle2(bt);
