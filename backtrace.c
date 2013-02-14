@@ -12,6 +12,10 @@ extern "C" {
 
 #include "filter.h"
 
+#ifndef min
+#define min(a,b) ((a < b) ? (a) : (b))
+#endif
+
 char* demangle2(char *bt) {
     char *output = NULL;
     char * const argv[] = {"/usr/bin/c++filt", "c++filt", NULL};
@@ -49,7 +53,8 @@ char* get_backtrace(char *full, size_t size) {
         exit(EXIT_FAILURE);
     }
 
-    for (j = 1; j < nptrs; j++) {
+    full[0] = '\0';
+    for (j = 1; j < min(10, nptrs); j++) {
         strcat(full, strings[j]);
         strcat(full, "\n");
     }
