@@ -1,6 +1,3 @@
-#ifndef BACKTRACE_H
-#define BACKTRACE_H
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -11,10 +8,11 @@ extern "C" {
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <assert.h>
+
 #include "filter.h"
 
-
-inline char* demangle2(char *bt) {
+char* demangle2(char *bt) {
     char *output = NULL;
     char * const argv[] = {"/usr/bin/c++filt", "c++filt", NULL};
     int argc = 3;
@@ -23,16 +21,18 @@ inline char* demangle2(char *bt) {
 }
 
 
-inline char* demangle(char *dest, size_t n, char *bt) {
+size_t demangle(char *dest, size_t n, char *bt) {
+    assert(dest);
+    assert(bt);
     char *output = demangle2(bt);
-    size_t s = strlen(output);
+    size_t s = strlen(output)+1;
     n = s > n ? n : s;
     memcpy(dest, output, n);
     free(output);
-    return dest;
+    return n;
 }
 
-inline char* get_backtrace(char *full, size_t size) {
+char* get_backtrace(char *full, size_t size) {
     int j, nptrs;
     void *buffer[100];
     char **strings;
@@ -61,5 +61,3 @@ inline char* get_backtrace(char *full, size_t size) {
 #ifdef __cplusplus
 } /* extern C */
 #endif
-
-#endif /* end of include guard */
