@@ -34,18 +34,18 @@ int cppfilt(size_t size) {
     char *output = (char *)malloc(size);
     // char *output = (char *)malloc(size);
     char * const text = "\
-/scratch/tyree/cudafd/src/fd_pricer/py_adi/FiniteDifference/BandedOperatorGPU.so(_Z9backtracePc+0x26) [0x2b097cd2adca]\n\
-/scratch/tyree/cudafd/src/fd_pricer/py_adi/FiniteDifference/BandedOperatorGPU.so(_ZN10SizedArrayIdE12sanity_checkEv+0x730) [0x2b097cd2d544]\n\
-/scratch/tyree/cudafd/src/fd_pricer/py_adi/FiniteDifference/BandedOperatorGPU.so(_ZN10SizedArrayIdEC1ElSs+0x65) [0x2b097cd3a879]\n\
-/scratch/tyree/cudafd/src/fd_pricer/py_adi/FiniteDifference/BandedOperatorGPU.so(_ZN18_CSRBandedOperator5applyER10SizedArrayIdE+0x3fc) [0x2b097cd34570]\n\
-/scratch/tyree/cudafd/src/fd_pricer/py_adi/FiniteDifference/BandedOperatorGPU.so(+0x7a550) [0x2b097ccb2550]\n\
-/scratch/tyree/cudafd/src/fd_pricer/py_adi/FiniteDifference/BandedOperatorGPU.so(+0x7c367) [0x2b097ccb4367]";
+BandedOperatorGPU.so(_Z9backtracePc+0x26) [0x2b097cd2adca]\n\
+BandedOperatorGPU.so(_ZN10SizedArrayIdE12sanity_checkEv+0x730) [0x2b097cd2d544]\n\
+BandedOperatorGPU.so(_ZN10SizedArrayIdEC1ElSs+0x65) [0x2b097cd3a879]\n\
+BandedOperatorGPU.so(_ZN18_CSRBandedOperator5applyER10SizedArrayIdE+0x3fc) [0x2b097cd34570]\n\
+BandedOperatorGPU.so(+0x7a550) [0x2b097ccb2550]\n\
+BandedOperatorGPU.so(+0x7c367) [0x2b097ccb4367]";
     char * const argv[] = {"/usr/bin/c++filt", "c++filt", NULL};
     char *input = text;
     int argc = 3;
     assert(output);
     assert(input);
-    size = demangle(output, size, input);
+    size = demangle(output, input, size);
     printf("Wrote %lu bytes.\n", size);
     fwrite(output, size, 1, stdout);
     puts("\n");
@@ -54,7 +54,6 @@ int cppfilt(size_t size) {
 }
 
 int main() {
-    cppfilt(255);
+    cppfilt(2048);
     return 0;
 }
-
